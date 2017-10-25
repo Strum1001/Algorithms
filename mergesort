@@ -1,0 +1,67 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <cstdio>
+#include <queue>
+using namespace std;
+void mergeSort(int a[], int bottom, int top )
+{
+      if(  top -bottom >0)
+      {
+        int  mid = (bottom+top)/2+1;
+         mergeSort(a,bottom, mid-1);
+         mergeSort(a, mid, top);
+         queue<int> upper;
+         queue<int> lower;
+        for(int c= bottom; c <mid; c++)
+             lower.push(a[c]);
+         for(int x = mid; x <= top; x++)
+             upper.push(a[x]);
+         for(int r = bottom; r<=top; r++)
+         {
+           if(!lower.empty() && !upper.empty())
+             if(lower.front()<= upper.front())
+             {
+                 a[r] =lower.front();
+                 lower.pop();
+                 
+             }
+             else
+             {
+                 a[r] = upper.front();
+                 upper.pop();
+             }
+           else if(lower.empty()){
+                 a[r] = upper.front();
+                 upper.pop();}
+           else {
+                 a[r] =lower.front();
+                 lower.pop();  }              
+                 
+                 
+      }
+      }
+}
+
+main()
+{
+    int n;
+	time_t begin,end;
+	cout<<"How long should it be?"<<endl;
+	cin>>n;
+	int array[n];
+	for(int r = 0; r<n; r++)
+		array[r] = rand() % 100 + 1;
+   time (&begin);
+      mergeSort(array, 0, n-1);
+      time (&end);
+
+              
+    double difference = difftime (end,begin);
+printf ("time taken for merge sort %.2lf seconds.\n", difference );
+
+      system("pause");
+}
+      
+      
+      
